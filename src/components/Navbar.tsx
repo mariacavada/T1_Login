@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import LogoutIcon from '@mui/icons-material/Logout'
 import HomeIcon from '@mui/icons-material/Home'
 import PersonIcon from '@mui/icons-material/Person'
+import GroupIcon from '@mui/icons-material/Group'
 
 interface NavbarProps {
   username: string
@@ -36,6 +37,15 @@ function Navbar({ username, onLogout }: NavbarProps) {
             variant={location.pathname === '/profile' ? 'outlined' : 'text'}
           >
             Perfil
+          </Button>
+          <Button
+            color="inherit"
+            component={Link}
+            to="/users"
+            startIcon={<GroupIcon />}
+            variant={location.pathname === '/users' ? 'outlined' : 'text'}
+          >
+            Usuarios
           </Button>
         </Box>
         <Typography variant="body2" sx={{ mr: 2 }}>

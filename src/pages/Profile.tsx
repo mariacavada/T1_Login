@@ -9,15 +9,14 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@mui/material'
-import EmailIcon from '@mui/icons-material/Email'
 import BadgeIcon from '@mui/icons-material/Badge'
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday'
+import PersonIcon from '@mui/icons-material/Person'
 
 interface ProfileProps {
-  username: string
+  user: { _id: string; name: string; username: string }
 }
 
-function Profile({ username }: ProfileProps) {
+function Profile({ user }: ProfileProps) {
   return (
     <Box sx={{ p: 4, maxWidth: 600, mx: 'auto' }}>
       <Typography variant="h4" gutterBottom>
@@ -35,9 +34,9 @@ function Profile({ username }: ProfileProps) {
               fontSize: 36,
             }}
           >
-            {username.charAt(0).toUpperCase()}
+            {(user.name || user.username).charAt(0).toUpperCase()}
           </Avatar>
-          <Typography variant="h5">{username}</Typography>
+          <Typography variant="h5">{user.name || user.username}</Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
             Usuario registrado
           </Typography>
@@ -46,25 +45,13 @@ function Profile({ username }: ProfileProps) {
               <ListItemIcon>
                 <BadgeIcon />
               </ListItemIcon>
-              <ListItemText primary="Nombre de usuario" secondary={username} />
+              <ListItemText primary="Nombre" secondary={user.name} />
             </ListItem>
             <ListItem>
               <ListItemIcon>
-                <EmailIcon />
+                <PersonIcon />
               </ListItemIcon>
-              <ListItemText
-                primary="Correo electrónico"
-                secondary={`${username}@ejemplo.com`}
-              />
-            </ListItem>
-            <ListItem>
-              <ListItemIcon>
-                <CalendarTodayIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Fecha de registro"
-                secondary="27 de marzo de 2026"
-              />
+              <ListItemText primary="Nombre de usuario" secondary={user.username} />
             </ListItem>
           </List>
         </CardContent>

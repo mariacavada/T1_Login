@@ -10,7 +10,7 @@ import {
 import LoginIcon from '@mui/icons-material/Login'
 
 interface LoginProps {
-  onLogin: (username: string) => void
+  onLogin: (username: string, password: string) => Promise<boolean>
 }
 
 function Login({ onLogin }: LoginProps) {
@@ -18,14 +18,15 @@ function Login({ onLogin }: LoginProps) {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!username.trim() || !password.trim()) {
       setError('Por favor, completa ambos campos.')
       return
     }
     setError('')
-    onLogin(username.trim())
+    const ok = await onLogin(username.trim(), password.trim())
+    if (!ok) setError('Usuario o contraseña incorrectos.')
   }
 
   return (
