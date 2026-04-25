@@ -1,11 +1,20 @@
 import { useState, useEffect } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
-import { CssBaseline } from '@mui/material'
+import { CssBaseline, ThemeProvider, createTheme } from '@mui/material'
 import Navbar from './components/Navbar'
 import Login from './pages/Login'
 import Home from './pages/Home'
 import Profile from './pages/Profile'
 import Users from './pages/Users'
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: { main: '#90caf9' },
+    secondary: { main: '#ce93d8' },
+    background: { default: '#121212', paper: '#1e1e1e' },
+  },
+})
 
 const API_URL = 'http://localhost:8000'
 
@@ -64,7 +73,7 @@ function App() {
   }
 
   return (
-    <>
+    <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       {isLoggedIn ? (
         <>
@@ -81,7 +90,7 @@ function App() {
           <Route path="*" element={<Login onLogin={handleLogin} />} />
         </Routes>
       )}
-    </>
+    </ThemeProvider>
   )
 }
 
