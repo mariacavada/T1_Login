@@ -16,7 +16,7 @@ const darkTheme = createTheme({
   },
 })
 
-const API_URL = 'http://localhost:8000'
+const API_URL = 'https://mariamariaapi.up.railway.app'
 
 interface User {
   _id: string
@@ -28,10 +28,13 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [user, setUser] = useState<User>({ _id: '', name: '', username: '' })
   const [users, setUsers] = useState<User[]>([])
+  const [token, setToken] = useState('')
 
   useEffect(() => {
     if (isLoggedIn) {
-      fetch(API_URL + '/users')
+      fetch(API_URL + '/users', {
+        headers: { Authorization: `Bearer ${token}` },
+      })
         .then((r) => r.json())
         .then((data) => setUsers(data))
     }
@@ -46,6 +49,7 @@ function App() {
     const data = await res.json()
     if (data.login) {
       setUser(data.user)
+      setToken(data.token)
       setIsLoggedIn(true)
     }
     return data.login
@@ -54,13 +58,14 @@ function App() {
   const handleLogout = () => {
     setUser({ _id: '', name: '', username: '' })
     setUsers([])
+    setToken('')
     setIsLoggedIn(false)
   }
 
   const addUser = async (name: string, username: string, password: string) => {
     const res = await fetch(API_URL + '/users', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
       body: JSON.stringify({ name, username, password }),
     })
     const data = await res.json()
@@ -69,7 +74,10 @@ function App() {
 
   const delUser = async (id: string) => {
     setUsers((prev) => prev.filter((u) => u._id !== id))
-    await fetch(API_URL + '/users/' + id, { method: 'DELETE' })
+    await fetch(API_URL + '/users/' + id, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${token}` },
+    })
   }
 
   return (
