@@ -1,7 +1,9 @@
-import { Box, Typography, Button, Avatar } from '@mui/material'
+import { Box, Typography, Button, Avatar, Menu, MenuItem, Divider } from '@mui/material'
 import { Link, useLocation } from 'react-router-dom'
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded'
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded'
+import PersonOutlineRoundedIcon from '@mui/icons-material/PersonOutlineRounded'
+import { useState } from 'react'
 
 interface NavbarProps {
   username: string
@@ -16,6 +18,8 @@ const navLinks = [
 
 function Navbar({ username, onLogout }: NavbarProps) {
   const location = useLocation()
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const menuOpen = Boolean(anchorEl)
 
   return (
     <Box
@@ -52,6 +56,7 @@ function Navbar({ username, onLogout }: NavbarProps) {
       {/* User selector */}
       <Box sx={{ px: 2, pb: 2 }}>
         <Box
+          onClick={(e) => setAnchorEl(e.currentTarget)}
           sx={{
             display: 'flex',
             alignItems: 'center',
@@ -59,7 +64,7 @@ function Navbar({ username, onLogout }: NavbarProps) {
             px: 1.5,
             py: 1.25,
             borderRadius: '10px',
-            background: 'rgba(255,255,255,0.6)',
+            background: menuOpen ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.6)',
             border: '1px solid #E5DDD0',
             cursor: 'pointer',
             '&:hover': { background: 'rgba(255,255,255,0.9)' },
@@ -85,8 +90,57 @@ function Navbar({ username, onLogout }: NavbarProps) {
             </Typography>
             <Typography sx={{ fontSize: 11, color: '#9A8F82', lineHeight: 1.2 }}>Usuario</Typography>
           </Box>
-          <KeyboardArrowDownRoundedIcon sx={{ fontSize: 16, color: '#9A8F82', flexShrink: 0 }} />
+          <KeyboardArrowDownRoundedIcon
+            sx={{
+              fontSize: 16,
+              color: '#9A8F82',
+              flexShrink: 0,
+              transition: 'transform 0.15s',
+              transform: menuOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+            }}
+          />
         </Box>
+        <Menu
+          anchorEl={anchorEl}
+          open={menuOpen}
+          onClose={() => setAnchorEl(null)}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+          transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+          slotProps={{
+            paper: {
+              sx: {
+                mt: 0.5,
+                width: 220,
+                borderRadius: '10px',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.10)',
+                border: '1px solid #E5DDD0',
+              },
+            },
+          }}
+        >
+          <Box sx={{ px: 2, py: 1.5 }}>
+            <Typography sx={{ fontSize: 13, fontWeight: 600, color: '#1A1A1A' }}>{username}</Typography>
+            <Typography sx={{ fontSize: 11, color: '#9A8F82' }}>Usuario</Typography>
+          </Box>
+          <Divider sx={{ borderColor: '#E5DDD0' }} />
+          <MenuItem
+            component={Link}
+            to="/profile"
+            onClick={() => setAnchorEl(null)}
+            sx={{ fontSize: 13, color: '#4A4A4A', gap: 1.25, py: 1 }}
+          >
+            <PersonOutlineRoundedIcon sx={{ fontSize: 16, color: '#9A8F82' }} />
+            Ver perfil
+          </MenuItem>
+          <Divider sx={{ borderColor: '#E5DDD0' }} />
+          <MenuItem
+            onClick={() => { setAnchorEl(null); onLogout() }}
+            sx={{ fontSize: 13, color: '#C0392B', gap: 1.25, py: 1 }}
+          >
+            <LogoutRoundedIcon sx={{ fontSize: 16 }} />
+            Cerrar sesión
+          </MenuItem>
+        </Menu>
       </Box>
 
       {/* Nav section label */}
@@ -147,45 +201,6 @@ function Navbar({ username, onLogout }: NavbarProps) {
 
       {/* Bottom section */}
       <Box sx={{ p: 2, pt: 0 }}>
-        {/* Plan card */}
-        <Box
-          sx={{
-            borderRadius: '12px',
-            background: '#D1FAE5',
-            border: '1px solid #A7F3D0',
-            p: 2,
-            mb: 1.5,
-          }}
-        >
-          <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.25, mb: 1.5 }}>
-            <Box sx={{ fontSize: 20, lineHeight: 1, mt: 0.1 }}>🔒</Box>
-            <Box>
-              <Typography sx={{ fontSize: 13, fontWeight: 600, color: '#065F46', mb: 0.25 }}>
-                Plan Gratis
-              </Typography>
-              <Typography sx={{ fontSize: 11.5, color: '#047857', lineHeight: 1.4 }}>
-                Desbloquea todos los usuarios
-              </Typography>
-            </Box>
-          </Box>
-          <Button
-            fullWidth
-            variant="outlined"
-            size="small"
-            sx={{
-              borderRadius: '8px',
-              borderColor: '#059669',
-              color: '#065F46',
-              fontWeight: 600,
-              fontSize: 12,
-              py: 0.75,
-              '&:hover': { background: 'rgba(5,150,105,0.08)', borderColor: '#047857' },
-            }}
-          >
-            Ver planes
-          </Button>
-        </Box>
-
         {/* Logout */}
         <Button
           fullWidth
