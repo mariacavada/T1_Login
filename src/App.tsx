@@ -9,42 +9,52 @@ import Users from './pages/Users'
 
 const theme = createTheme({
   palette: {
-    mode: 'dark',
-    primary: { main: '#6366F1', light: '#818CF8', dark: '#4F46E5' },
-    secondary: { main: '#22D3EE' },
-    error: { main: '#F43F5E' },
-    success: { main: '#10B981' },
-    background: { default: '#07091A', paper: 'rgba(15,23,42,0.8)' },
-    text: { primary: '#F1F5F9', secondary: '#94A3B8' },
-    divider: 'rgba(99,102,241,0.15)',
+    mode: 'light',
+    primary: { main: '#E9A318', light: '#F5C45E', dark: '#C88910', contrastText: '#fff' },
+    secondary: { main: '#5A4A3A' },
+    error: { main: '#E53E3E' },
+    success: { main: '#276749' },
+    background: { default: '#FAF7F2', paper: '#FFFFFF' },
+    text: { primary: '#1A1A1A', secondary: '#7A7A7A' },
+    divider: '#EDE8DE',
   },
   typography: {
-    fontFamily: '"Outfit", sans-serif',
-    h1: { fontFamily: '"Syne", sans-serif', fontWeight: 800 },
-    h2: { fontFamily: '"Syne", sans-serif', fontWeight: 700 },
-    h3: { fontFamily: '"Syne", sans-serif', fontWeight: 700 },
-    h4: { fontFamily: '"Syne", sans-serif', fontWeight: 700 },
-    h5: { fontFamily: '"Syne", sans-serif', fontWeight: 600 },
-    h6: { fontFamily: '"Syne", sans-serif', fontWeight: 600 },
-    button: { fontFamily: '"Outfit", sans-serif', fontWeight: 600, textTransform: 'none' },
+    fontFamily: '"DM Sans", sans-serif',
+    h1: { fontWeight: 700 },
+    h2: { fontWeight: 700 },
+    h3: { fontWeight: 700 },
+    h4: { fontWeight: 600 },
+    h5: { fontWeight: 600 },
+    h6: { fontWeight: 600 },
+    button: { textTransform: 'none', fontWeight: 500 },
   },
-  shape: { borderRadius: 14 },
+  shape: { borderRadius: 10 },
+  shadows: [
+    'none',
+    '0 1px 3px rgba(0,0,0,0.06)',
+    '0 2px 6px rgba(0,0,0,0.07)',
+    '0 4px 12px rgba(0,0,0,0.08)',
+    '0 6px 16px rgba(0,0,0,0.09)',
+    '0 8px 24px rgba(0,0,0,0.1)',
+    ...Array(19).fill('none'),
+  ] as any,
   components: {
     MuiCssBaseline: {
-      styleOverrides: {
-        body: { background: '#07091A', minHeight: '100vh' },
-      },
+      styleOverrides: { body: { background: '#FAF7F2' } },
     },
     MuiButton: {
       styleOverrides: {
-        root: { textTransform: 'none', fontWeight: 600, borderRadius: 10 },
+        root: { textTransform: 'none', fontWeight: 500, borderRadius: 999 },
         containedPrimary: {
-          background: 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)',
-          boxShadow: '0 4px 24px rgba(99,102,241,0.35)',
-          '&:hover': {
-            background: 'linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%)',
-            boxShadow: '0 6px 30px rgba(99,102,241,0.5)',
-          },
+          background: '#E9A318',
+          color: '#fff',
+          boxShadow: 'none',
+          '&:hover': { background: '#C88910', boxShadow: 'none' },
+        },
+        outlinedPrimary: {
+          borderColor: '#E9A318',
+          color: '#E9A318',
+          '&:hover': { background: 'rgba(233,163,24,0.06)', borderColor: '#C88910' },
         },
       },
     },
@@ -53,56 +63,47 @@ const theme = createTheme({
         root: {
           '& .MuiOutlinedInput-root': {
             borderRadius: 10,
-            background: 'rgba(255,255,255,0.04)',
-            '& fieldset': { borderColor: 'rgba(99,102,241,0.25)' },
-            '&:hover fieldset': { borderColor: 'rgba(99,102,241,0.5)' },
-            '&.Mui-focused fieldset': { borderColor: '#6366F1' },
+            background: '#FDFBF7',
+            '& fieldset': { borderColor: '#E5DDD0' },
+            '&:hover fieldset': { borderColor: '#C4B49A' },
+            '&.Mui-focused fieldset': { borderColor: '#E9A318', borderWidth: 1.5 },
           },
-          '& .MuiInputLabel-root': { color: '#94A3B8' },
-          '& .MuiInputLabel-root.Mui-focused': { color: '#818CF8' },
+          '& .MuiInputLabel-root.Mui-focused': { color: '#E9A318' },
         },
       },
     },
     MuiCard: {
       styleOverrides: {
         root: {
-          background: 'rgba(15,23,42,0.6)',
-          backdropFilter: 'blur(20px)',
-          border: '1px solid rgba(99,102,241,0.12)',
-          borderRadius: 16,
+          background: '#FFFFFF',
+          border: '1px solid #EDE8DE',
+          boxShadow: '0 1px 4px rgba(0,0,0,0.05)',
+          borderRadius: 14,
         },
       },
     },
     MuiPaper: {
       styleOverrides: {
-        root: {
-          background: 'rgba(15,23,42,0.8)',
-          backdropFilter: 'blur(20px)',
-          backgroundImage: 'none',
-        },
+        root: { backgroundImage: 'none' },
       },
     },
     MuiTableCell: {
       styleOverrides: {
-        root: {
-          borderColor: 'rgba(99,102,241,0.1)',
-          color: '#F1F5F9',
-        },
+        root: { borderColor: '#EDE8DE', color: '#1A1A1A', fontFamily: '"DM Sans", sans-serif' },
         head: {
-          fontFamily: '"Outfit", sans-serif',
-          fontWeight: 600,
+          fontWeight: 500,
           fontSize: 12,
           textTransform: 'uppercase',
-          letterSpacing: '0.08em',
-          color: '#94A3B8',
-          background: 'rgba(99,102,241,0.08)',
+          letterSpacing: '0.06em',
+          color: '#9A8F82',
+          background: '#FAF7F2',
         },
       },
     },
     MuiTableRow: {
       styleOverrides: {
         root: {
-          '&:hover': { background: 'rgba(99,102,241,0.06)' },
+          '&:hover': { background: '#FAF7F2' },
           '&:last-child td': { border: 0 },
         },
       },
@@ -110,15 +111,16 @@ const theme = createTheme({
     MuiAvatar: {
       styleOverrides: {
         root: {
-          background: 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)',
-          fontFamily: '"Syne", sans-serif',
+          background: '#E9A318',
+          color: '#fff',
           fontWeight: 700,
+          fontFamily: '"DM Sans", sans-serif',
         },
       },
     },
-    MuiIconButton: {
+    MuiChip: {
       styleOverrides: {
-        root: { borderRadius: 10 },
+        root: { fontFamily: '"DM Sans", sans-serif', borderRadius: 6 },
       },
     },
   },
@@ -200,31 +202,7 @@ function App() {
               flex: 1,
               ml: '260px',
               minHeight: '100vh',
-              background: 'linear-gradient(135deg, #07091A 0%, #0D1528 50%, #0A0E1F 100%)',
-              position: 'relative',
-              overflow: 'hidden',
-              '&::before': {
-                content: '""',
-                position: 'fixed',
-                top: '-20%',
-                right: '-10%',
-                width: 600,
-                height: 600,
-                borderRadius: '50%',
-                background: 'radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%)',
-                pointerEvents: 'none',
-              },
-              '&::after': {
-                content: '""',
-                position: 'fixed',
-                bottom: '-20%',
-                left: '20%',
-                width: 500,
-                height: 500,
-                borderRadius: '50%',
-                background: 'radial-gradient(circle, rgba(34,211,238,0.06) 0%, transparent 70%)',
-                pointerEvents: 'none',
-              },
+              bgcolor: '#FAF7F2',
             }}
           >
             <Routes>

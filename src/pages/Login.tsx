@@ -1,10 +1,7 @@
 import { useState } from 'react'
 import { Box, Button, TextField, Typography, Alert, InputAdornment, IconButton } from '@mui/material'
-import PersonOutlineRoundedIcon from '@mui/icons-material/PersonOutlineRounded'
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
-import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded'
 
 interface LoginProps {
   onLogin: (username: string, password: string) => Promise<boolean>
@@ -35,164 +32,99 @@ function Login({ onLogin }: LoginProps) {
       sx={{
         minHeight: '100vh',
         display: 'flex',
-        background: '#07091A',
-        '@keyframes floatA': {
-          '0%, 100%': { transform: 'translate(0, 0) scale(1)' },
-          '33%': { transform: 'translate(30px, -50px) scale(1.05)' },
-          '66%': { transform: 'translate(-20px, 20px) scale(0.95)' },
-        },
-        '@keyframes floatB': {
-          '0%, 100%': { transform: 'translate(0, 0) scale(1)' },
-          '33%': { transform: 'translate(-40px, 30px) scale(1.08)' },
-          '66%': { transform: 'translate(25px, -35px) scale(0.92)' },
-        },
-        '@keyframes floatC': {
-          '0%, 100%': { transform: 'translate(0, 0)' },
-          '50%': { transform: 'translate(20px, -25px)' },
-        },
-        '@keyframes fadeUp': {
-          from: { opacity: 0, transform: 'translateY(24px)' },
-          to: { opacity: 1, transform: 'translateY(0)' },
-        },
+        background: '#FAF7F2',
       }}
     >
       {/* Left decorative panel */}
       <Box
         sx={{
           display: { xs: 'none', md: 'flex' },
-          width: '45%',
+          width: '44%',
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
+          background: '#F2EBD9',
+          borderRight: '1px solid #E5DDD0',
+          px: 6,
           position: 'relative',
           overflow: 'hidden',
-          background: 'linear-gradient(135deg, #0D1033 0%, #12083A 50%, #0A1040 100%)',
-          borderRight: '1px solid rgba(99,102,241,0.15)',
         }}
       >
-        {/* Animated orbs */}
+        {/* Subtle decorative circles */}
         <Box
           sx={{
             position: 'absolute',
-            top: '15%',
-            left: '10%',
-            width: 340,
-            height: 340,
+            top: -80,
+            right: -80,
+            width: 320,
+            height: 320,
             borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(99,102,241,0.35) 0%, rgba(139,92,246,0.15) 50%, transparent 70%)',
-            animation: 'floatA 10s ease-in-out infinite',
-            filter: 'blur(40px)',
+            background: 'rgba(233,163,24,0.1)',
           }}
         />
         <Box
           sx={{
             position: 'absolute',
-            bottom: '20%',
-            right: '5%',
-            width: 280,
-            height: 280,
+            bottom: -60,
+            left: -60,
+            width: 240,
+            height: 240,
             borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(34,211,238,0.25) 0%, rgba(6,182,212,0.1) 50%, transparent 70%)',
-            animation: 'floatB 13s ease-in-out infinite',
-            filter: 'blur(35px)',
-          }}
-        />
-        <Box
-          sx={{
-            position: 'absolute',
-            top: '55%',
-            left: '40%',
-            width: 180,
-            height: 180,
-            borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(167,139,250,0.3) 0%, transparent 70%)',
-            animation: 'floatC 8s ease-in-out infinite',
-            filter: 'blur(25px)',
-          }}
-        />
-
-        {/* Grid overlay */}
-        <Box
-          sx={{
-            position: 'absolute',
-            inset: 0,
-            backgroundImage: `
-              linear-gradient(rgba(99,102,241,0.05) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(99,102,241,0.05) 1px, transparent 1px)
-            `,
-            backgroundSize: '40px 40px',
+            background: 'rgba(233,163,24,0.07)',
           }}
         />
 
         {/* Content */}
-        <Box sx={{ position: 'relative', zIndex: 1, textAlign: 'center', px: 5 }}>
-          <Box
-            sx={{
-              width: 64,
-              height: 64,
-              borderRadius: '18px',
-              background: 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              mx: 'auto',
-              mb: 3,
-              boxShadow: '0 8px 32px rgba(99,102,241,0.5)',
-            }}
-          >
-            <Typography
-              sx={{
-                fontFamily: '"Syne", sans-serif',
-                fontWeight: 800,
-                fontSize: 30,
-                color: '#fff',
-              }}
-            >
-              M
-            </Typography>
-          </Box>
+        <Box sx={{ position: 'relative', zIndex: 1, textAlign: 'center', maxWidth: 340 }}>
           <Typography
             sx={{
-              fontFamily: '"Syne", sans-serif',
-              fontWeight: 800,
-              fontSize: 38,
-              color: '#F1F5F9',
-              letterSpacing: '-0.03em',
-              lineHeight: 1.1,
+              fontFamily: '"DM Sans", sans-serif',
+              fontWeight: 700,
+              fontSize: 48,
+              letterSpacing: '-0.05em',
+              color: '#1A1A1A',
               mb: 2,
+              lineHeight: 1,
             }}
           >
-            Mi App
+            mi app
           </Typography>
           <Typography
             sx={{
               fontSize: 15,
-              color: '#64748B',
-              lineHeight: 1.7,
-              maxWidth: 300,
-              mx: 'auto',
+              color: '#7A7A7A',
+              lineHeight: 1.65,
+              mb: 4,
             }}
           >
             Tu plataforma de gestión de usuarios, proyectos y colaboración en un solo lugar.
           </Typography>
 
-          {/* Feature pills */}
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, justifyContent: 'center', mt: 4 }}>
-            {['Gestión de usuarios', 'Proyectos activos', 'Colaboración'].map((f) => (
-              <Box
-                key={f}
-                sx={{
-                  px: 2,
-                  py: 0.75,
-                  borderRadius: 20,
-                  background: 'rgba(99,102,241,0.1)',
-                  border: '1px solid rgba(99,102,241,0.2)',
-                  fontSize: 12,
-                  color: '#818CF8',
-                  fontWeight: 500,
-                }}
-              >
-                {f}
+          {/* Feature list */}
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, textAlign: 'left' }}>
+            {[
+              { emoji: '🏠', text: 'Panel de control con métricas clave' },
+              { emoji: '👤', text: 'Gestión de perfil de usuario' },
+              { emoji: '👥', text: 'Administración de usuarios' },
+            ].map((f) => (
+              <Box key={f.text} sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                <Box
+                  sx={{
+                    width: 36,
+                    height: 36,
+                    borderRadius: '10px',
+                    background: '#fff',
+                    border: '1px solid #E5DDD0',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: 16,
+                    flexShrink: 0,
+                  }}
+                >
+                  {f.emoji}
+                </Box>
+                <Typography sx={{ fontSize: 13.5, color: '#4A4A4A', lineHeight: 1.4 }}>{f.text}</Typography>
               </Box>
             ))}
           </Box>
@@ -208,88 +140,75 @@ function Login({ onLogin }: LoginProps) {
           justifyContent: 'center',
           px: { xs: 3, sm: 6 },
           py: 6,
+          background: '#FFFFFF',
         }}
       >
-        <Box
-          sx={{
-            width: '100%',
-            maxWidth: 420,
-            animation: 'fadeUp 0.6s ease both',
-          }}
-        >
+        <Box sx={{ width: '100%', maxWidth: 380 }}>
           {/* Mobile logo */}
-          <Box sx={{ display: { xs: 'flex', md: 'none' }, alignItems: 'center', gap: 1.5, mb: 5 }}>
-            <Box
+          <Box sx={{ display: { xs: 'block', md: 'none' }, mb: 5 }}>
+            <Typography
               sx={{
-                width: 40,
-                height: 40,
-                borderRadius: '12px',
-                background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
+                fontFamily: '"DM Sans"',
+                fontWeight: 700,
+                fontSize: 32,
+                letterSpacing: '-0.04em',
+                color: '#1A1A1A',
               }}
             >
-              <Typography sx={{ fontFamily: '"Syne"', fontWeight: 800, fontSize: 20, color: '#fff' }}>M</Typography>
-            </Box>
-            <Typography sx={{ fontFamily: '"Syne"', fontWeight: 700, fontSize: 20, color: '#F1F5F9' }}>Mi App</Typography>
+              mi app
+            </Typography>
           </Box>
 
           <Typography
-            variant="h4"
             sx={{
-              fontFamily: '"Syne", sans-serif',
-              fontWeight: 800,
-              fontSize: { xs: 28, sm: 34 },
-              color: '#F1F5F9',
-              mb: 1,
+              fontFamily: '"DM Sans", sans-serif',
+              fontWeight: 700,
+              fontSize: 26,
+              color: '#1A1A1A',
               letterSpacing: '-0.02em',
+              mb: 0.75,
             }}
           >
-            Bienvenido de vuelta
+            Iniciar sesión
           </Typography>
-          <Typography sx={{ color: '#64748B', fontSize: 15, mb: 4 }}>
-            Inicia sesión para acceder a tu cuenta
+          <Typography sx={{ color: '#9A8F82', fontSize: 14, mb: 3.5 }}>
+            Bienvenido de vuelta, ingresa tus datos para continuar.
           </Typography>
 
           {error && (
             <Alert
               severity="error"
               sx={{
-                mb: 3,
+                mb: 2.5,
                 borderRadius: '10px',
-                background: 'rgba(244,63,94,0.1)',
-                border: '1px solid rgba(244,63,94,0.25)',
-                color: '#FDA4AF',
-                '& .MuiAlert-icon': { color: '#F43F5E' },
+                fontSize: 13,
+                border: '1px solid #FED7D7',
+                background: '#FFF5F5',
+                color: '#C53030',
+                '& .MuiAlert-icon': { color: '#E53E3E' },
               }}
             >
               {error}
             </Alert>
           )}
 
-          <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 1.75 }}>
             <Box>
-              <Typography sx={{ fontSize: 13, fontWeight: 500, color: '#94A3B8', mb: 0.75 }}>
-                Nombre de usuario
+              <Typography sx={{ fontSize: 13, fontWeight: 500, color: '#4A4A4A', mb: 0.75 }}>
+                Usuario
               </Typography>
               <TextField
                 fullWidth
                 placeholder="tu_usuario"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <PersonOutlineRoundedIcon sx={{ color: '#475569', fontSize: 20 }} />
-                    </InputAdornment>
-                  ),
-                }}
+                size="small"
+                sx={{ '& .MuiOutlinedInput-root': { fontSize: 14 } }}
               />
             </Box>
 
             <Box>
-              <Typography sx={{ fontSize: 13, fontWeight: 500, color: '#94A3B8', mb: 0.75 }}>
+              <Typography sx={{ fontSize: 13, fontWeight: 500, color: '#4A4A4A', mb: 0.75 }}>
                 Contraseña
               </Typography>
               <TextField
@@ -298,15 +217,17 @@ function Login({ onLogin }: LoginProps) {
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                size="small"
+                sx={{ '& .MuiOutlinedInput-root': { fontSize: 14 } }}
                 InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <LockOutlinedIcon sx={{ color: '#475569', fontSize: 20 }} />
-                    </InputAdornment>
-                  ),
                   endAdornment: (
                     <InputAdornment position="end">
-                      <IconButton onClick={() => setShowPass(!showPass)} edge="end" sx={{ color: '#475569' }}>
+                      <IconButton
+                        onClick={() => setShowPass(!showPass)}
+                        edge="end"
+                        size="small"
+                        sx={{ color: '#C4B49A' }}
+                      >
                         {showPass ? <VisibilityOff fontSize="small" /> : <Visibility fontSize="small" />}
                       </IconButton>
                     </InputAdornment>
@@ -319,28 +240,19 @@ function Login({ onLogin }: LoginProps) {
               type="submit"
               variant="contained"
               fullWidth
-              size="large"
               disabled={loading}
-              endIcon={!loading && <ArrowForwardRoundedIcon />}
               sx={{
-                mt: 1,
-                py: 1.5,
-                fontSize: 15,
+                mt: 0.5,
+                py: 1.25,
+                fontSize: 14,
                 fontWeight: 600,
-                borderRadius: '12px',
-                background: loading
-                  ? 'rgba(99,102,241,0.5)'
-                  : 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)',
-                boxShadow: loading ? 'none' : '0 4px 24px rgba(99,102,241,0.4)',
-                '&:hover:not(:disabled)': {
-                  background: 'linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%)',
-                  boxShadow: '0 8px 32px rgba(99,102,241,0.55)',
-                  transform: 'translateY(-1px)',
-                },
-                transition: 'all 0.2s ease',
+                borderRadius: '999px',
+                background: '#E9A318',
+                '&:hover:not(:disabled)': { background: '#C88910' },
+                '&.Mui-disabled': { background: '#F5D68A', color: '#fff' },
               }}
             >
-              {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
+              {loading ? 'Entrando...' : 'Entrar'}
             </Button>
           </Box>
         </Box>

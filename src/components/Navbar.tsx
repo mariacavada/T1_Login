@@ -1,9 +1,7 @@
-import { Box, Typography, Button, Avatar, Divider } from '@mui/material'
+import { Box, Typography, Button, Avatar } from '@mui/material'
 import { Link, useLocation } from 'react-router-dom'
-import LogoutIcon from '@mui/icons-material/Logout'
-import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded'
-import PersonRoundedIcon from '@mui/icons-material/PersonRounded'
-import GroupRoundedIcon from '@mui/icons-material/GroupRounded'
+import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded'
+import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded'
 
 interface NavbarProps {
   username: string
@@ -11,9 +9,9 @@ interface NavbarProps {
 }
 
 const navLinks = [
-  { to: '/', icon: <GridViewRoundedIcon fontSize="small" />, label: 'Inicio' },
-  { to: '/profile', icon: <PersonRoundedIcon fontSize="small" />, label: 'Perfil' },
-  { to: '/users', icon: <GroupRoundedIcon fontSize="small" />, label: 'Usuarios' },
+  { to: '/', emoji: '🏠', label: 'Inicio' },
+  { to: '/profile', emoji: '👤', label: 'Perfil' },
+  { to: '/users', emoji: '👥', label: 'Usuarios' },
 ]
 
 function Navbar({ username, onLogout }: NavbarProps) {
@@ -30,84 +28,84 @@ function Navbar({ username, onLogout }: NavbarProps) {
         width: 260,
         display: 'flex',
         flexDirection: 'column',
-        background: 'rgba(10,14,31,0.95)',
-        backdropFilter: 'blur(24px)',
-        borderRight: '1px solid rgba(99,102,241,0.12)',
+        background: '#F2EBD9',
+        borderRight: '1px solid #E5DDD0',
         zIndex: 100,
-        '&::before': {
-          content: '""',
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: 1,
-          background: 'linear-gradient(90deg, transparent, rgba(99,102,241,0.4), transparent)',
-        },
       }}
     >
       {/* Logo */}
-      <Box sx={{ p: 3, pb: 2 }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-          <Box
-            sx={{
-              width: 38,
-              height: 38,
-              borderRadius: '10px',
-              background: 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 4px 16px rgba(99,102,241,0.4)',
-              flexShrink: 0,
-            }}
-          >
+      <Box sx={{ px: 3, pt: 3.5, pb: 2.5 }}>
+        <Typography
+          sx={{
+            fontFamily: '"DM Sans", sans-serif',
+            fontWeight: 700,
+            fontSize: 26,
+            color: '#1A1A1A',
+            letterSpacing: '-0.04em',
+            lineHeight: 1,
+          }}
+        >
+          mi app
+        </Typography>
+      </Box>
+
+      {/* User selector */}
+      <Box sx={{ px: 2, pb: 2 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1.25,
+            px: 1.5,
+            py: 1.25,
+            borderRadius: '10px',
+            background: 'rgba(255,255,255,0.6)',
+            border: '1px solid #E5DDD0',
+            cursor: 'pointer',
+            '&:hover': { background: 'rgba(255,255,255,0.9)' },
+            transition: 'background 0.15s',
+          }}
+        >
+          <Avatar sx={{ width: 30, height: 30, fontSize: 13, fontWeight: 700, flexShrink: 0 }}>
+            {username.charAt(0).toUpperCase()}
+          </Avatar>
+          <Box sx={{ flex: 1, overflow: 'hidden' }}>
             <Typography
               sx={{
-                fontFamily: '"Syne", sans-serif',
-                fontWeight: 800,
-                fontSize: 18,
-                color: '#fff',
-                lineHeight: 1,
+                fontSize: 13,
+                fontWeight: 600,
+                color: '#1A1A1A',
+                lineHeight: 1.2,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
               }}
             >
-              M
+              {username}
             </Typography>
+            <Typography sx={{ fontSize: 11, color: '#9A8F82', lineHeight: 1.2 }}>Usuario</Typography>
           </Box>
-          <Typography
-            sx={{
-              fontFamily: '"Syne", sans-serif',
-              fontWeight: 700,
-              fontSize: 18,
-              color: '#F1F5F9',
-              letterSpacing: '-0.02em',
-            }}
-          >
-            Mi App
-          </Typography>
+          <KeyboardArrowDownRoundedIcon sx={{ fontSize: 16, color: '#9A8F82', flexShrink: 0 }} />
         </Box>
       </Box>
 
-      <Divider sx={{ mx: 2, borderColor: 'rgba(99,102,241,0.1)' }} />
-
-      {/* Nav label */}
+      {/* Nav section label */}
       <Typography
         sx={{
           px: 3,
-          pt: 3,
-          pb: 1,
-          fontSize: 10,
+          py: 1,
+          fontSize: 12,
           fontWeight: 600,
-          letterSpacing: '0.12em',
-          textTransform: 'uppercase',
-          color: '#475569',
+          color: '#9A8F82',
+          letterSpacing: '0.02em',
         }}
       >
-        Navegación
+        Panel
       </Typography>
 
-      {/* Nav Links */}
-      <Box sx={{ px: 2, flex: 1, display: 'flex', flexDirection: 'column', gap: 0.5 }}>
-        {navLinks.map(({ to, icon, label }) => {
+      {/* Nav links */}
+      <Box sx={{ px: 1.5, flex: 1, display: 'flex', flexDirection: 'column', gap: 0.25 }}>
+        {navLinks.map(({ to, emoji, label }) => {
           const active = location.pathname === to
           return (
             <Box
@@ -119,52 +117,25 @@ function Navbar({ username, onLogout }: NavbarProps) {
                 alignItems: 'center',
                 gap: 1.5,
                 px: 2,
-                py: 1.25,
-                borderRadius: '10px',
+                py: 1.1,
+                borderRadius: '8px',
                 textDecoration: 'none',
-                transition: 'all 0.2s ease',
                 position: 'relative',
-                overflow: 'hidden',
-                background: active
-                  ? 'linear-gradient(135deg, rgba(99,102,241,0.18) 0%, rgba(139,92,246,0.12) 100%)'
-                  : 'transparent',
-                border: active ? '1px solid rgba(99,102,241,0.25)' : '1px solid transparent',
+                transition: 'all 0.15s ease',
+                background: active ? 'rgba(255,255,255,0.7)' : 'transparent',
+                borderLeft: active ? '3px solid #E9A318' : '3px solid transparent',
                 '&:hover': {
-                  background: active
-                    ? 'linear-gradient(135deg, rgba(99,102,241,0.22) 0%, rgba(139,92,246,0.16) 100%)'
-                    : 'rgba(99,102,241,0.07)',
-                  border: '1px solid rgba(99,102,241,0.18)',
-                },
-                '& svg': {
-                  color: active ? '#818CF8' : '#64748B',
-                  transition: 'color 0.2s ease',
-                  flexShrink: 0,
+                  background: active ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.4)',
                 },
               }}
             >
-              {active && (
-                <Box
-                  sx={{
-                    position: 'absolute',
-                    left: 0,
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    width: 3,
-                    height: '60%',
-                    borderRadius: '0 2px 2px 0',
-                    background: 'linear-gradient(180deg, #6366F1, #8B5CF6)',
-                    boxShadow: '0 0 8px rgba(99,102,241,0.6)',
-                  }}
-                />
-              )}
-              {icon}
+              <Box sx={{ fontSize: 16, lineHeight: 1, width: 20, textAlign: 'center' }}>{emoji}</Box>
               <Typography
                 sx={{
-                  fontFamily: '"Outfit", sans-serif',
-                  fontWeight: active ? 600 : 500,
                   fontSize: 14,
-                  color: active ? '#E0E7FF' : '#94A3B8',
-                  transition: 'color 0.2s ease',
+                  fontWeight: active ? 600 : 400,
+                  color: active ? '#1A1A1A' : '#4A4A4A',
+                  transition: 'all 0.15s',
                 }}
               >
                 {label}
@@ -174,69 +145,62 @@ function Navbar({ username, onLogout }: NavbarProps) {
         })}
       </Box>
 
-      {/* Bottom user section */}
-      <Box sx={{ p: 2 }}>
-        <Divider sx={{ mb: 2, borderColor: 'rgba(99,102,241,0.1)' }} />
+      {/* Bottom section */}
+      <Box sx={{ p: 2, pt: 0 }}>
+        {/* Plan card */}
         <Box
           sx={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 1.5,
-            px: 1.5,
-            py: 1.5,
             borderRadius: '12px',
-            background: 'rgba(99,102,241,0.06)',
-            border: '1px solid rgba(99,102,241,0.1)',
+            background: '#D1FAE5',
+            border: '1px solid #A7F3D0',
+            p: 2,
             mb: 1.5,
           }}
         >
-          <Avatar
+          <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.25, mb: 1.5 }}>
+            <Box sx={{ fontSize: 20, lineHeight: 1, mt: 0.1 }}>🔒</Box>
+            <Box>
+              <Typography sx={{ fontSize: 13, fontWeight: 600, color: '#065F46', mb: 0.25 }}>
+                Plan Gratis
+              </Typography>
+              <Typography sx={{ fontSize: 11.5, color: '#047857', lineHeight: 1.4 }}>
+                Desbloquea todos los usuarios
+              </Typography>
+            </Box>
+          </Box>
+          <Button
+            fullWidth
+            variant="outlined"
+            size="small"
             sx={{
-              width: 34,
-              height: 34,
-              fontSize: 14,
-              fontWeight: 700,
-              flexShrink: 0,
+              borderRadius: '8px',
+              borderColor: '#059669',
+              color: '#065F46',
+              fontWeight: 600,
+              fontSize: 12,
+              py: 0.75,
+              '&:hover': { background: 'rgba(5,150,105,0.08)', borderColor: '#047857' },
             }}
           >
-            {username.charAt(0).toUpperCase()}
-          </Avatar>
-          <Box sx={{ overflow: 'hidden' }}>
-            <Typography
-              sx={{
-                fontSize: 13,
-                fontWeight: 600,
-                color: '#E2E8F0',
-                lineHeight: 1.2,
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              {username}
-            </Typography>
-            <Typography sx={{ fontSize: 11, color: '#64748B' }}>Usuario activo</Typography>
-          </Box>
+            Ver planes
+          </Button>
         </Box>
 
+        {/* Logout */}
         <Button
           fullWidth
           onClick={onLogout}
-          startIcon={<LogoutIcon fontSize="small" />}
+          startIcon={<LogoutRoundedIcon sx={{ fontSize: '16px !important' }} />}
           sx={{
             justifyContent: 'flex-start',
             px: 2,
             py: 1,
-            borderRadius: '10px',
-            color: '#64748B',
+            borderRadius: '8px',
+            color: '#9A8F82',
             fontSize: 13,
-            fontWeight: 500,
-            border: '1px solid transparent',
-            '&:hover': {
-              background: 'rgba(244,63,94,0.08)',
-              color: '#F43F5E',
-              border: '1px solid rgba(244,63,94,0.2)',
-            },
+            fontWeight: 400,
+            background: 'transparent',
+            '&:hover': { background: 'rgba(0,0,0,0.04)', color: '#4A4A4A' },
           }}
         >
           Cerrar sesión
