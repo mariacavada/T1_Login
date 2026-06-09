@@ -4,11 +4,7 @@ import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownR
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded'
 import PersonOutlineRoundedIcon from '@mui/icons-material/PersonOutlineRounded'
 import { useState } from 'react'
-
-interface NavbarProps {
-  username: string
-  onLogout: () => void
-}
+import useAuth from '../hooks/useAuth'
 
 const navLinks = [
   { to: '/', emoji: '🏠', label: 'Inicio' },
@@ -16,7 +12,9 @@ const navLinks = [
   { to: '/users', emoji: '👥', label: 'Usuarios' },
 ]
 
-function Navbar({ username, onLogout }: NavbarProps) {
+function Navbar() {
+  const { user, logout } = useAuth()
+  const username = user.name || user.username
   const location = useLocation()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const menuOpen = Boolean(anchorEl)
@@ -134,7 +132,7 @@ function Navbar({ username, onLogout }: NavbarProps) {
           </MenuItem>
           <Divider sx={{ borderColor: '#E5DDD0' }} />
           <MenuItem
-            onClick={() => { setAnchorEl(null); onLogout() }}
+            onClick={() => { setAnchorEl(null); logout() }}
             sx={{ fontSize: 13, color: '#C0392B', gap: 1.25, py: 1 }}
           >
             <LogoutRoundedIcon sx={{ fontSize: 16 }} />
@@ -204,7 +202,7 @@ function Navbar({ username, onLogout }: NavbarProps) {
         {/* Logout */}
         <Button
           fullWidth
-          onClick={onLogout}
+          onClick={logout}
           startIcon={<LogoutRoundedIcon sx={{ fontSize: '16px !important' }} />}
           sx={{
             justifyContent: 'flex-start',

@@ -1,10 +1,8 @@
 import { Box, Typography, Avatar, Chip } from '@mui/material'
+import useAuth from '../hooks/useAuth'
 
-interface ProfileProps {
-  user: { _id: string; name: string; username: string }
-}
-
-function Profile({ user }: ProfileProps) {
+function Profile() {
+  const { user } = useAuth()
   const displayName = user.name || user.username
 
   const fields = [

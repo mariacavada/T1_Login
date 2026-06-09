@@ -1,8 +1,5 @@
 import { Box, Typography, Card, CardContent } from '@mui/material'
-
-interface HomeProps {
-  username: string
-}
+import useAuth from '../hooks/useAuth'
 
 const cards = [
   { title: 'Proyectos Activos', value: '12', emoji: '📁', bg: '#FEF3C7', border: '#FDE68A', text: '#92400E' },
@@ -10,7 +7,9 @@ const cards = [
   { title: 'Colaboradores', value: '7', emoji: '🤝', bg: '#EDE9FE', border: '#DDD6FE', text: '#4C1D95' },
 ]
 
-function Home({ username }: HomeProps) {
+function Home() {
+  const { user } = useAuth()
+  const username = user.name || user.username
   return (
     <Box sx={{ p: { xs: 3, sm: 5 }, maxWidth: 900 }}>
       {/* Header */}

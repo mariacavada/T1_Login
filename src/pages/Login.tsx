@@ -2,12 +2,10 @@ import { useState } from 'react'
 import { Box, Button, TextField, Typography, Alert, InputAdornment, IconButton } from '@mui/material'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
+import useAuth from '../hooks/useAuth'
 
-interface LoginProps {
-  onLogin: (username: string, password: string) => Promise<boolean>
-}
-
-function Login({ onLogin }: LoginProps) {
+function Login() {
+  const { login } = useAuth()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -22,7 +20,7 @@ function Login({ onLogin }: LoginProps) {
     }
     setError('')
     setLoading(true)
-    const ok = await onLogin(username.trim(), password.trim())
+    const ok = await login(username.trim(), password.trim())
     if (!ok) setError('Usuario o contraseña incorrectos.')
     setLoading(false)
   }

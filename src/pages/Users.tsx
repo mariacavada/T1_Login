@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   Box,
   Typography,
@@ -13,37 +14,30 @@ import {
   Button,
   Avatar,
   Tooltip,
+  CircularProgress,
 } from '@mui/material'
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded'
 import PersonAddRoundedIcon from '@mui/icons-material/PersonAddRounded'
+import OpenInNewRoundedIcon from '@mui/icons-material/OpenInNewRounded'
+import useUsers from '../hooks/useUsers'
 
-interface User {
-  _id: string
-  name: string
-  username: string
-}
-
-interface UsersProps {
-  users: User[]
-  addUser: (name: string, username: string, password: string) => Promise<void>
-  delUser: (id: string) => void
-}
-
-function Users({ users, addUser, delUser }: UsersProps) {
+function Users() {
+  const { users, loading, addUser, removeUser } = useUsers()
+  const navigate = useNavigate()
   const [name, setName] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [saving, setSaving] = useState(false)
 
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!name.trim() || !username.trim() || !password.trim()) return
-    setLoading(true)
-    await addUser(name.trim(), username.trim(), password.trim())
+    setSaving(true)
+    await addUser({ name: name.trim(), username: username.trim(), password: password.trim() })
     setName('')
     setUsername('')
     setPassword('')
-    setLoading(false)
+    setSaving(false)
   }
 
   return (
@@ -151,118 +145,147 @@ function Users({ users, addUser, delUser }: UsersProps) {
           <Button
             type="submit"
             variant="contained"
-            disabled={loading}
+            disabled={saving}
             startIcon={<PersonAddRoundedIcon sx={{ fontSize: '16px !important' }} />}
             sx={{ py: 1, px: 2.5, whiteSpace: 'nowrap', fontSize: 13 }}
           >
-            {loading ? 'Agregando...' : 'Agregar'}
+            {saving ? 'Agregando...' : 'Agregar'}
           </Button>
         </Box>
       </Box>
 
+      {/* Loading */}
+      {loading && (
+        <Box sx={{ display: 'flex', justifyContent: 'center', py: 6 }}>
+          <CircularProgress sx={{ color: '#E9A318' }} />
+        </Box>
+      )}
+
       {/* Table */}
-      <Box
-        sx={{
-          borderRadius: '14px',
-          background: '#FFFFFF',
-          border: '1px solid #EDE8DE',
-          overflow: 'hidden',
-        }}
-      >
-        <TableContainer>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell sx={{ pl: 3 }}>Nombre</TableCell>
-                <TableCell>Usuario</TableCell>
-                <TableCell sx={{ display: { xs: 'none', md: 'table-cell' } }}>ID</TableCell>
-                <TableCell align="right" sx={{ pr: 3 }}>Acción</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {users.length === 0 ? (
+      {!loading && (
+        <Box
+          sx={{
+            borderRadius: '14px',
+            background: '#FFFFFF',
+            border: '1px solid #EDE8DE',
+            overflow: 'hidden',
+          }}
+        >
+          <TableContainer>
+            <Table>
+              <TableHead>
                 <TableRow>
-                  <TableCell colSpan={4} align="center" sx={{ py: 7 }}>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1.5 }}>
-                      <Box sx={{ fontSize: 36 }}>👥</Box>
-                      <Typography sx={{ color: '#9A8F82', fontSize: 14 }}>
-                        No hay usuarios registrados aún
-                      </Typography>
-                    </Box>
-                  </TableCell>
+                  <TableCell sx={{ pl: 3 }}>Nombre</TableCell>
+                  <TableCell>Usuario</TableCell>
+                  <TableCell sx={{ display: { xs: 'none', md: 'table-cell' } }}>ID</TableCell>
+                  <TableCell align="right" sx={{ pr: 3 }}>Acciones</TableCell>
                 </TableRow>
-              ) : (
-                users.map((u) => (
-                  <TableRow key={u._id}>
-                    <TableCell sx={{ pl: 3 }}>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                        <Avatar sx={{ width: 32, height: 32, fontSize: 13, fontWeight: 700 }}>
-                          {(u.name || u.username).charAt(0).toUpperCase()}
-                        </Avatar>
-                        <Typography sx={{ fontSize: 13.5, fontWeight: 500, color: '#1A1A1A' }}>
-                          {u.name || '—'}
+              </TableHead>
+              <TableBody>
+                {users.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={4} align="center" sx={{ py: 7 }}>
+                      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1.5 }}>
+                        <Box sx={{ fontSize: 36 }}>👥</Box>
+                        <Typography sx={{ color: '#9A8F82', fontSize: 14 }}>
+                          No hay usuarios registrados aún
                         </Typography>
                       </Box>
-                    </TableCell>
-                    <TableCell>
-                      <Box
-                        sx={{
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          px: 1.5,
-                          py: 0.4,
-                          borderRadius: '6px',
-                          background: '#FAF7F2',
-                          border: '1px solid #EDE8DE',
-                        }}
-                      >
-                        <Typography sx={{ fontSize: 13, color: '#7A7A7A' }}>
-                          @{u.username}
-                        </Typography>
-                      </Box>
-                    </TableCell>
-                    <TableCell sx={{ display: { xs: 'none', md: 'table-cell' } }}>
-                      <Typography
-                        sx={{
-                          fontFamily: 'monospace',
-                          fontSize: 11,
-                          color: '#C4B49A',
-                          maxWidth: 180,
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          whiteSpace: 'nowrap',
-                        }}
-                      >
-                        {u._id}
-                      </Typography>
-                    </TableCell>
-                    <TableCell align="right" sx={{ pr: 3 }}>
-                      <Tooltip title="Eliminar usuario" arrow>
-                        <IconButton
-                          onClick={() => delUser(u._id)}
-                          size="small"
-                          sx={{
-                            color: '#C4B49A',
-                            border: '1px solid #EDE8DE',
-                            '&:hover': {
-                              color: '#E53E3E',
-                              background: '#FFF5F5',
-                              border: '1px solid #FED7D7',
-                            },
-                            transition: 'all 0.15s ease',
-                          }}
-                        >
-                          <DeleteRoundedIcon fontSize="small" />
-                        </IconButton>
-                      </Tooltip>
                     </TableCell>
                   </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Box>
+                ) : (
+                  users.map((u) => (
+                    <TableRow key={u._id}>
+                      <TableCell sx={{ pl: 3 }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                          <Avatar sx={{ width: 32, height: 32, fontSize: 13, fontWeight: 700 }}>
+                            {(u.name || u.username).charAt(0).toUpperCase()}
+                          </Avatar>
+                          <Typography sx={{ fontSize: 13.5, fontWeight: 500, color: '#1A1A1A' }}>
+                            {u.name || '—'}
+                          </Typography>
+                        </Box>
+                      </TableCell>
+                      <TableCell>
+                        <Box
+                          sx={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            px: 1.5,
+                            py: 0.4,
+                            borderRadius: '6px',
+                            background: '#FAF7F2',
+                            border: '1px solid #EDE8DE',
+                          }}
+                        >
+                          <Typography sx={{ fontSize: 13, color: '#7A7A7A' }}>
+                            @{u.username}
+                          </Typography>
+                        </Box>
+                      </TableCell>
+                      <TableCell sx={{ display: { xs: 'none', md: 'table-cell' } }}>
+                        <Typography
+                          sx={{
+                            fontFamily: 'monospace',
+                            fontSize: 11,
+                            color: '#C4B49A',
+                            maxWidth: 180,
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                          }}
+                        >
+                          {u._id}
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="right" sx={{ pr: 3 }}>
+                        <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
+                          <Tooltip title="Ver detalle" arrow>
+                            <IconButton
+                              onClick={() => navigate(`/users/${u._id}`)}
+                              size="small"
+                              sx={{
+                                color: '#C4B49A',
+                                border: '1px solid #EDE8DE',
+                                '&:hover': {
+                                  color: '#E9A318',
+                                  background: '#FEF9EC',
+                                  border: '1px solid #FDE68A',
+                                },
+                                transition: 'all 0.15s ease',
+                              }}
+                            >
+                              <OpenInNewRoundedIcon fontSize="small" />
+                            </IconButton>
+                          </Tooltip>
+                          <Tooltip title="Eliminar usuario" arrow>
+                            <IconButton
+                              onClick={() => removeUser(u._id)}
+                              size="small"
+                              sx={{
+                                color: '#C4B49A',
+                                border: '1px solid #EDE8DE',
+                                '&:hover': {
+                                  color: '#E53E3E',
+                                  background: '#FFF5F5',
+                                  border: '1px solid #FED7D7',
+                                },
+                                transition: 'all 0.15s ease',
+                              }}
+                            >
+                              <DeleteRoundedIcon fontSize="small" />
+                            </IconButton>
+                          </Tooltip>
+                        </Box>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+      )}
     </Box>
   )
 }
