@@ -1,4 +1,4 @@
-const API_URL = 'https://mariamariaapi.up.railway.app'
+const API_URL = 'https://t1login-production.up.railway.app'
 
 export const getUsers = async (token: string) => {
   const res = await fetch(API_URL + '/users', {

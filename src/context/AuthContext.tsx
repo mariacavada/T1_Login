@@ -1,6 +1,6 @@
 import { createContext, useState, type ReactNode } from 'react'
 
-const API_URL = 'https://mariamariaapi.up.railway.app'
+const API_URL = 'https://t1login-production.up.railway.app'
 
 interface User {
   _id: string
